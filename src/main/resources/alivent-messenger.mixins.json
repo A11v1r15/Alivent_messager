@@ -10,8 +10,6 @@
     "VillagerEntityMixin",
     "EntityMixin"
   ],
-  "server": [
-  ],
   "injectors": {
     "defaultRequire": 1
   }
