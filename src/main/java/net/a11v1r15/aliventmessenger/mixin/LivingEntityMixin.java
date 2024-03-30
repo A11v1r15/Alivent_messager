@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 
-import net.a11v1r15.aliventmessenger.AliventMessenger;
 import net.a11v1r15.aliventmessenger.AliventMessengerConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -44,21 +43,21 @@ extends Entity {
             this.getWorld().getGameRules().getBoolean(GameRules.SHOW_DEATH_MESSAGES)) {
             if (this.hasCustomName() || AliventMessengerConfig.allMobMessages) {
                 final boolean test = ((Object)this instanceof TameableEntity && ((TameableEntity)(Object)this).getOwner() instanceof ServerPlayerEntity);
-                this.getWorld().getPlayers().forEach(player -> {if (!(test && ((TameableEntity)(Object)this).getOwnerUuid() == player.getUuid())) player.sendMessage(this.getDamageTracker().getDeathMessage(), false);});
+                this.getServer().getPlayerManager().getPlayerList().forEach(player -> {if (!(test && ((TameableEntity)(Object)this).getOwnerUuid() == player.getUuid())) player.sendMessage(this.getDamageTracker().getDeathMessage(), false);});
             } else if (((Object)this instanceof AllayEntity) && ((AllayEntity)(Object)this).isHoldingItem()) {
                 Optional<UUID> likedPlayer = ((AllayEntity)(Object)this).getBrain().getOptionalMemory(MemoryModuleType.LIKED_PLAYER);
-                this.getWorld().getPlayers().forEach(player -> {if (player.getUuid().equals(likedPlayer.get())) player.sendMessage(this.getDamageTracker().getDeathMessage(), false);});
+                this.getServer().getPlayerManager().getPlayerList().forEach(player -> {if (player.getUuid().equals(likedPlayer.get())) player.sendMessage(this.getDamageTracker().getDeathMessage(), false);});
             } else if(AliventMessengerConfig.villagerMessages &&
                       ((Object)this instanceof VillagerEntity || (Object)this instanceof ZombieVillagerEntity)){
                 if ((Object)this instanceof VillagerEntity) {
-                    this.getWorld().getPlayers().forEach(player -> player.sendMessage(this.getDamageTracker().getDeathMessage(), false));
+                    this.getServer().getPlayerManager().getPlayerList().forEach(player -> player.sendMessage(this.getDamageTracker().getDeathMessage(), false));
                 } else if ((Object)this instanceof ZombieVillagerEntity && !(((ZombieVillagerEntity)(Object)this).canImmediatelyDespawn(Double.MAX_VALUE))) {
-                    this.getWorld().getPlayers().forEach(player -> player.sendMessage(this.getDamageTracker().getDeathMessage(), false));
+                    this.getServer().getPlayerManager().getPlayerList().forEach(player -> player.sendMessage(this.getDamageTracker().getDeathMessage(), false));
                 }
             } else if (AliventMessengerConfig.playerKillMessages &&
                        this.attacker instanceof ServerPlayerEntity) {
                 final boolean test = ((Object)this instanceof TameableEntity && ((TameableEntity)(Object)this).getOwner() instanceof ServerPlayerEntity);
-                this.getWorld().getPlayers().forEach(player -> {if (!(test && ((TameableEntity)(Object)this).getOwnerUuid() == player.getUuid())) player.sendMessage(this.getDamageTracker().getDeathMessage(), false);});
+                this.getServer().getPlayerManager().getPlayerList().forEach(player -> {if (!(test && ((TameableEntity)(Object)this).getOwnerUuid() == player.getUuid())) player.sendMessage(this.getDamageTracker().getDeathMessage(), false);});
             }
         }
     }
