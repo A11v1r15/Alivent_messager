@@ -2,6 +2,8 @@
   "alivent-messenger.midnightconfig.title": "Aliven't Messenger Settings",
   "alivent-messenger.midnightconfig.allMobMessages": "All mobs aliven't messages",
   "alivent-messenger.midnightconfig.allMobMessages.tooltip": "Gives aliven't messages for all mobs, instead of just ones with custom names",
+  "alivent-messenger.midnightconfig.playerKillMessages": "Player kill aliven't messages",
+  "alivent-messenger.midnightconfig.playerKillMessages.tooltip": "Gives aliven't messages for all mobs killed by a Player",
   "alivent-messenger.midnightconfig.villagerMessages": "Villagers aliven't messages",
   "alivent-messenger.midnightconfig.villagerMessages.tooltip": "Gives aliven't messages for all Villagers and Zombie Villagers with trades",
   "alivent-messenger.midnightconfig.loreDrops": "Lore drops",

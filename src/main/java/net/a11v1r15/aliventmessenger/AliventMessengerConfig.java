@@ -5,6 +5,9 @@ import eu.midnightdust.lib.config.MidnightConfig;
 public class AliventMessengerConfig extends MidnightConfig {
     @Entry(category = "text") //Gives aliven't messages for all mobs, instead of just ones with custom names
     public static boolean allMobMessages = false;
+    
+    @Entry(category = "text") //Gives aliven't messages for all mobs killed by a Player
+    public static boolean playerKillMessages = false;
 
     @Entry(category = "text") //Gives aliven't messages for all Villagers and Zombie Villagers with trades
     public static boolean villagerMessages = true;

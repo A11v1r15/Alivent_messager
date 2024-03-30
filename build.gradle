@@ -33,8 +33,6 @@ dependencies {
 
 	// MidnightLib
   	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
-	annotationProcessor "maven.modrinth:midnightlib:${project.midnightlib_version}"
-	include "maven.modrinth:midnightlib:${project.midnightlib_version}"
 }
 
 base {
