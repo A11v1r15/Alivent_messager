@@ -54,7 +54,7 @@ CommandOutput {
         method = "getName()Lnet/minecraft/text/Text;",
         at = @At(value = "STORE"), ordinal = 0
         )
-    private Text aliventMessenger$giveColourToEntityName(Text name) {
+    private Text aliventMessenger$giveColourAndSpeciesNameToEntityName(Text name) {
         if(name != null) {
             if(AliventMessengerConfig.speciesName)
                 name = Text.translatable("commands.list.nameAndId", name, this.getDefaultName());

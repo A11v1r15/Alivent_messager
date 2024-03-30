@@ -20,15 +20,16 @@ So that's a mod that may interest you. As it shows when a named mob dies, you wi
 
 # Miscellaneous changes:
 
-* Named Creepers show "blew up" aliven't message when they explode as an attack or by getting ignited with Flint and Steel.
+* Named Creepers show "blew up" aliven't message when they explode as an attack.
+* Creepers will be "blown up by" a player when getting ignited with Flint and Steel, Fire Charges or watever other itens that can ignite a Creeper. This will award the player the Monster Hunter archievement and count towards the mob kill statistics.
 * Zombie Villagers default names are composed by their profession followed by "(Zombie Villager)".
-* Named mobs will drop items with their name as item lore.
-* Removes the default messages sent to the log about aliven't villagers and custom-named mobs.
+* Allays holding items will give aliven't message to who gave them the item, as if it is with a Parrot, Wolf or Cat
  
 
 # Settings:
 
 * allMobMessages: Gives aliven't messages for all mobs, instead of just ones with custom names. Defaults false.
+* playerKillMessages: Gives aliven't messages for all mobs killed by a Player. Defaults false.
 * villagerMessages: Gives aliven't messages for all Villagers and Zombie Villagers with trades. Defaults true.
 * loreDrops: Gives lore info for items dropped from named mobs. Defaults true.
 * nameColour: The names of the mobs will appear with colour. Defaults false.
