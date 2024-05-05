@@ -17,8 +17,8 @@
 		"issues": "https://github.com/A11v1r15/Alivent_messenger/issues"
 	},
 	"depends": {
-		"fabricloader": ">=0.15.7",
-		"minecraft": ">=1.20.5-alpha.24.9.a",
+		"fabricloader": ">=0.15.11",
+		"minecraft": ">=1.20.5",
 		"java": ">=17",
 		"fabric-api": "*",
 		"midnightlib": "*"
