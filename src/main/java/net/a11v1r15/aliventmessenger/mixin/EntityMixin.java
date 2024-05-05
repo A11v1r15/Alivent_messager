@@ -18,7 +18,6 @@ import net.minecraft.server.command.CommandOutput;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Nameable;
-import net.minecraft.world.World;
 import net.minecraft.world.entity.EntityLike;
 
 @Mixin(Entity.class)
@@ -26,15 +25,14 @@ public abstract class EntityMixin
 implements Nameable,
 EntityLike,
 CommandOutput {
-    @Shadow public World world;
     @ModifyVariable(
         method = "dropStack(Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/ItemEntity;",
-        at = @At(value = "STORE"), ordinal = 0
+        at = @At(value = "STORE"), name = "itemEntity"
         )
     private ItemEntity aliventMessenger$giveLoreNameToDroppings(ItemEntity x) {
         if(AliventMessengerConfig.loreDrops && this.hasCustomName()){
             LoreComponent lore = LoreComponent.DEFAULT;
-            lore.with(Text.literal(this.getCustomName().getString()));
+            lore = lore.with(Text.literal(this.getCustomName().getString()));
             x.getStack().set(DataComponentTypes.LORE, lore);
         }
         return x;
