@@ -27,7 +27,7 @@ EntityLike,
 CommandOutput {
     @ModifyVariable(
         method = "dropStack(Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/ItemEntity;",
-        at = @At(value = "STORE"), name = "itemEntity"
+        at = @At(value = "STORE"), ordinal = 0
         )
     private ItemEntity aliventMessenger$giveLoreNameToDroppings(ItemEntity x) {
         if(AliventMessengerConfig.loreDrops && this.hasCustomName()){
