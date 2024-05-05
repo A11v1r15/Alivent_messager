@@ -34,7 +34,7 @@ CommandOutput {
     private ItemEntity aliventMessenger$giveLoreNameToDroppings(ItemEntity x) {
         if(AliventMessengerConfig.loreDrops && this.hasCustomName()){
             LoreComponent lore = LoreComponent.DEFAULT;
-            lore.of(Text.literal(this.getCustomName().getString()));
+            lore.with(Text.literal(this.getCustomName().getString()));
             x.getStack().set(DataComponentTypes.LORE, lore);
         }
         return x;
