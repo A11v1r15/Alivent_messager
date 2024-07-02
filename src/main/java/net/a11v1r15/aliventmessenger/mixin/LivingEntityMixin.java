@@ -1,5 +1,6 @@
 package net.a11v1r15.aliventmessenger.mixin;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,7 +21,6 @@ import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.damage.DamageTracker;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.passive.AllayEntity;
-import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.GameRules;
@@ -41,23 +41,23 @@ extends Entity {
     private void aliventMessenger$sendAliventMessageToChat(CallbackInfo info) {
         if (!this.getWorld().isClient &&
             this.getWorld().getGameRules().getBoolean(GameRules.SHOW_DEATH_MESSAGES)) {
+            List<ServerPlayerEntity> playerList = this.getServer().getPlayerManager().getPlayerList();
             if (this.hasCustomName() || AliventMessengerConfig.allMobMessages) {
-                final boolean test = ((Object)this instanceof TameableEntity && ((TameableEntity)(Object)this).getOwner() instanceof ServerPlayerEntity);
-                this.getServer().getPlayerManager().getPlayerList().forEach(player -> {if (!(test && ((TameableEntity)(Object)this).getOwnerUuid() == player.getUuid())) player.sendMessage(this.getDamageTracker().getDeathMessage(), false);});
-            } else if (((Object)this instanceof AllayEntity) && ((AllayEntity)(Object)this).isHoldingItem()) {
-                Optional<UUID> likedPlayer = ((AllayEntity)(Object)this).getBrain().getOptionalMemory(MemoryModuleType.LIKED_PLAYER);
-                this.getServer().getPlayerManager().getPlayerList().forEach(player -> {if (player.getUuid().equals(likedPlayer.get())) player.sendMessage(this.getDamageTracker().getDeathMessage(), false);});
+                playerList.forEach(player -> player.sendMessage(this.getDamageTracker().getDeathMessage(), false));
+            } else if ((Object)this instanceof AllayEntity allayEntity && allayEntity.isHoldingItem()) {
+                Optional<UUID> likedPlayer = allayEntity.getBrain().getOptionalMemory(MemoryModuleType.LIKED_PLAYER);
+                boolean playerKill = AliventMessengerConfig.playerKillMessages && this.attacker instanceof ServerPlayerEntity;
+                playerList.forEach(player -> {if (player.getUuid().equals(likedPlayer.get()) || playerKill) player.sendMessage(this.getDamageTracker().getDeathMessage(), false);});
             } else if(AliventMessengerConfig.villagerMessages &&
                       ((Object)this instanceof VillagerEntity || (Object)this instanceof ZombieVillagerEntity)){
                 if ((Object)this instanceof VillagerEntity) {
-                    this.getServer().getPlayerManager().getPlayerList().forEach(player -> player.sendMessage(this.getDamageTracker().getDeathMessage(), false));
-                } else if ((Object)this instanceof ZombieVillagerEntity && !(((ZombieVillagerEntity)(Object)this).canImmediatelyDespawn(Double.MAX_VALUE))) {
-                    this.getServer().getPlayerManager().getPlayerList().forEach(player -> player.sendMessage(this.getDamageTracker().getDeathMessage(), false));
+                    playerList.forEach(player -> player.sendMessage(this.getDamageTracker().getDeathMessage(), false));
+                } else if ((Object)this instanceof ZombieVillagerEntity zombieVillagerEntity && !zombieVillagerEntity.canImmediatelyDespawn(Double.MAX_VALUE)) {
+                    playerList.forEach(player -> player.sendMessage(this.getDamageTracker().getDeathMessage(), false));
                 }
             } else if (AliventMessengerConfig.playerKillMessages &&
                        this.attacker instanceof ServerPlayerEntity) {
-                final boolean test = ((Object)this instanceof TameableEntity && ((TameableEntity)(Object)this).getOwner() instanceof ServerPlayerEntity);
-                this.getServer().getPlayerManager().getPlayerList().forEach(player -> {if (!(test && ((TameableEntity)(Object)this).getOwnerUuid() == player.getUuid())) player.sendMessage(this.getDamageTracker().getDeathMessage(), false);});
+                playerList.forEach(player -> player.sendMessage(this.getDamageTracker().getDeathMessage(), false));
             }
         }
     }

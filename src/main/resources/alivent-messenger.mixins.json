@@ -4,11 +4,12 @@
   "package": "net.a11v1r15.aliventmessenger.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "LivingEntityMixin",
     "CreeperEntityMixin",
-    "ZombieVillagerEntityMixin",
+    "EntityMixin",
+    "LivingEntityMixin",
+    "TameableEntityMixin",
     "VillagerEntityMixin",
-    "EntityMixin"
+    "ZombieVillagerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
