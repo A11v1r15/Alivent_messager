@@ -23,9 +23,9 @@ public abstract class TameableEntityMixin extends AnimalEntity {
 
     @WrapWithCondition(
 	    method = "onDeath(Lnet/minecraft/entity/damage/DamageSource;)V", 
-	    at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;sendMessage(Lnet/minecraft/text/Text;)V")
+	    at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;sendMessage(Lnet/minecraft/text/Text;)V")
     )
-    private boolean aliventMessenger$conditionallyUnprivateTameableDeathMessage(LivingEntity instance, Text text) {
+    private boolean aliventMessenger$conditionallyUnprivateTameableDeathMessage(ServerPlayerEntity instance, Text message) {
         return !(this.hasCustomName() || AliventMessengerConfig.allMobMessages ||
                 (AliventMessengerConfig.playerKillMessages && this.getAttacker() instanceof ServerPlayerEntity));
     }

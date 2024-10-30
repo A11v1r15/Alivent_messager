@@ -1,9 +1,11 @@
 package net.a11v1r15.aliventmessenger.mixin;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
+import net.minecraft.server.world.ServerWorld;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -39,17 +41,17 @@ extends Entity {
     @SuppressWarnings("resource")
     @Inject(at = @At(value = "HEAD"), method = "onDeath(Lnet/minecraft/entity/damage/DamageSource;)V")
     private void aliventMessenger$sendAliventMessageToChat(CallbackInfo info) {
-        if (!this.getWorld().isClient &&
-            this.getWorld().getGameRules().getBoolean(GameRules.SHOW_DEATH_MESSAGES)) {
-            List<ServerPlayerEntity> playerList = this.getServer().getPlayerManager().getPlayerList();
+        if (this.getWorld() instanceof ServerWorld serverWorld &&
+                serverWorld.getGameRules().getBoolean(GameRules.SHOW_DEATH_MESSAGES)) {
+            List<ServerPlayerEntity> playerList = Objects.requireNonNull(this.getServer()).getPlayerManager().getPlayerList();
             if (this.hasCustomName() || AliventMessengerConfig.allMobMessages) {
                 playerList.forEach(player -> player.sendMessage(this.getDamageTracker().getDeathMessage(), false));
-            } else if ((Object)this instanceof AllayEntity allayEntity && allayEntity.isHoldingItem()) {
+            } else if (((Object) this instanceof AllayEntity allayEntity) && allayEntity.isHoldingItem()) {
                 Optional<UUID> likedPlayer = allayEntity.getBrain().getOptionalMemory(MemoryModuleType.LIKED_PLAYER);
                 boolean playerKill = AliventMessengerConfig.playerKillMessages && this.attacker instanceof ServerPlayerEntity;
                 playerList.forEach(player -> {if (player.getUuid().equals(likedPlayer.get()) || playerKill) player.sendMessage(this.getDamageTracker().getDeathMessage(), false);});
             } else if(AliventMessengerConfig.villagerMessages &&
-                      ((Object)this instanceof VillagerEntity || (Object)this instanceof ZombieVillagerEntity)){
+                    (((Object) this instanceof VillagerEntity) || ((Object) this instanceof ZombieVillagerEntity))){
                 if ((Object)this instanceof VillagerEntity) {
                     playerList.forEach(player -> player.sendMessage(this.getDamageTracker().getDeathMessage(), false));
                 } else if ((Object)this instanceof ZombieVillagerEntity zombieVillagerEntity && !zombieVillagerEntity.canImmediatelyDespawn(Double.MAX_VALUE)) {

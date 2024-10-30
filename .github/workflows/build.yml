@@ -33,5 +33,5 @@ jobs:
         if: ${{ matrix.java == '21' }} # Only upload artifacts built from latest java
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.repository.name }}_Artifacts_${{ github.sha }}
+          name: ${{ github.event.repository.name }}_${{ github.sha }}
           path: build/libs/
