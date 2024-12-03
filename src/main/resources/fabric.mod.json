@@ -18,10 +18,10 @@
 	},
 	"depends": {
 		"fabricloader": ">=0.15.11",
-		"minecraft": ">=1.21.4-alpha.24.45.a",
+		"minecraft": ">=1.21.4",
 		"java": ">=21",
 		"fabric-api": "*",
-		"midnightlib": ">=1.6.4"
+		"midnightlib": ">=1.6.5"
 	},
 	"authors": [
 		"A11v1r15"
