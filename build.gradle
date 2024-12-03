@@ -40,7 +40,7 @@ dependencies {
 }
 
 base {
-	archivesName = project.archives_base_name
+	archivesName = "${project.archives_base_name} v${project.mod_version} + mc${project.minecraft_version}"
 }
 
 processResources {
